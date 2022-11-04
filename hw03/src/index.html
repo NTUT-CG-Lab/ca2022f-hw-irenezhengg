@@ -9,7 +9,7 @@
         margin: 0;
         overflow: hidden;
     }
-    h4, span{
+    h4, span {
       font-size: 10px !important;
     }
     .Sliders{
@@ -17,24 +17,6 @@
       top: 20px;
       left: 150px;
       background: rgba(0,0,0,0.3);
-    }
-    .sliderBox{
-      border:1px black solid;
-      padding: 0px 10px 10px 10px;
-    }
-    .ParamList{
-      position: absolute !important;
-      top: 20px;
-      right: 150px;
-    }
-    .ParamListBox{
-      border:1px black solid;
-      padding: 0px 10px 10px 10px;
-    }
-    .ParamListBtm{
-      position: absolute !important;
-      top: 220px;
-      right: 150px;
     }
 
   </style>
@@ -48,49 +30,49 @@
 <body>
   <div class="Sliders">
     <div class="col">
-      <div id="div ParamAngleX" class="sliderBox">
+      <div id="div ParamAngleX" style="border-width:1px; border-style:solid;">
         <h4>ParamAngleX</h4>
         <span>-30</span>
         <input id="ParamAngleX" type="range" step="0.1" min="-30" max="30" value="0" >
         <span>30</span>
       </div>
 
-      <div id="div ParamAngleY" class="sliderBox">
+      <div id="div ParamAngleY" style="border-width:1px; border-style:solid;">
         <h4>ParamAngleY</h4>
         <span>-30</span>
         <input id="ParamAngleY" type="range" step="0.1" min="-30" max="30" value="0" >
         <span>30</span>
       </div>
 
-      <div id="div ParamAngleZ" class="sliderBox">
+      <div id="div ParamAngleZ" style="border-width:1px; border-style:solid;">
         <h4>ParamAngleZ</h4>
         <span>-30</span>
         <input id="ParamAngleZ" type="range" step="0.1" min="-30" max="30" value="0" >
         <span>30</span>
       </div>
 
-      <div id="div ParamBrowLY" class="sliderBox">
+      <div id="div ParamBrowLY" style="border-width:1px; border-style:solid;">
         <h4>ParamBrowLY</h4>
         <span>-1</span>
         <input id="ParamBrowLY" type="range" step="0.1" min="-1" max="1" value="0" >
         <span>1</span>
       </div>
 
-      <div id="div ParamBrowRY" class="sliderBox">
+      <div id="div ParamBrowRY" style="border-width:1px; border-style:solid;">
         <h4>ParamBrowRY</h4>
         <span>-1</span>
         <input id="ParamBrowRY" type="range" step="0.1" min="-1" max="1" value="0" >
         <span>1</span>
       </div>
 
-      <div id="div ParamBrowLX" class="sliderBox">
+      <div id="div ParamBrowLX" style="border-width:1px; border-style:solid;">
         <h4>ParamBrowLX</h4>
         <span>-1</span>
         <input id="ParamBrowLX" type="range" step="0.1" min="-1" max="1" value="0" >
         <span>1</span>
       </div>
 
-      <div id="div ParamBrowRX" class="sliderBox">
+      <div id="div ParamBrowRX" style="border-width:1px; border-style:solid;">
         <h4>ParamBrowRX</h4>
         <span>-1</span>
         <input id="ParamBrowRX" type="range" step="0.1" min="-1" max="1" value="0" >
@@ -99,158 +81,7 @@
     </div>
   </div>
 
-  <script src="./main.js"></script>
+  <script src="main.js"></script>
 
-  <script>
-    const std_select = document.querySelector('#std_select');
-    const spec_select = document.querySelector('#spec_select');
-    const input_std_min = document.querySelector('#std_min');
-    const input_spec_min = document.querySelector('#spec_min');
-    const input_std_max = document.querySelector('#std_max');
-    const input_spec_max = document.querySelector('#spec_max');
-    const std_bar = document.querySelector('#std_bar');
-    const spec_bar = document.querySelector('#spec_bar');
-    const std_title = document.querySelector('#std_title');
-    const spec_title = document.querySelector('#spec_title');
-    var std_first_param = "";
-    var spec_first_param = "";
-    var myall_param = [];
-    var mystd_param = [];
-    var myspec_param = [];
-    var std_param = ['ParamAngleX', 'ParamAngleY', 'ParamAngleZ', 'ParamEyeLOpen',
-    'ParamEyeLSmile', 'ParamEyeROpen', 'ParamEyeRSmile', 'ParamEyeBallX', 'ParamEyeBallY',
-    'ParamEyeBallForm', 'ParamBrowLY', 'ParamBrowRY', 'ParamBrowLX', 'ParamBrowRX',
-    'ParamBrowLAngle', 'ParamBrowRAngle',
-    'ParamBrowLForm', 'ParamBrowRForm', 'ParamMouthForm', 'ParamMouthOpenY', 'ParamCheek',
-    'ParamBodyAngleX', 'ParamBodyAngleY', 'ParamBodyAngleZ', 'ParamBreath', 'ParamArmLA',
-    'ParamArmRA', 'ParamArmLB', 'ParamArmRB', 'ParamHandL', 'ParamHandR',
-    'ParamHairFront', 'ParamHairSide', 'ParamHairBack', 'ParamHairFluffy', 'ParamShoulderY',
-    'ParamBustX', 'ParamBustY', 'ParamBaseX', 'ParamBaseY'];
-
-    //set select option
-    view = getView();
-    console.log(view);
-    const old_view = {...view};
-
-    $.getJSON("../../Resources/Haru/Haru.cdi3.json", function(json) {
-        params = json['Parameters'];
-        console.log(json);
-        params.forEach(function(item){
-          id = item['Id'];
-          myall_param.push(id);
-          isStd = false;
-
-          std_param.forEach(function(std){
-            //get std param
-            if(id == std){
-              isStd = true;
-              std_select.add(new Option(id));
-              mystd_param.push(id);
-            }
-          });
-
-          //get spec param
-          if(!isStd){
-            myspec_param.push(id);
-            spec_select.add(new Option(id));
-          }
-        });
-
-        std_first_param = std_select.value;
-        spec_first_param = spec_select.value;
-
-        std_title.innerHTML = std_first_param;
-        spec_title.innerHTML = spec_first_param;
-    });
-
-    //set min & max value
-    input_std_min.addEventListener('change', (event) => {
-      std_bar.min = input_std_min.value;
-    });
-
-    input_spec_min.addEventListener('change', (event) => {
-      spec_bar.min = input_spec_min.value;
-    });
-
-    input_std_max.addEventListener('change', (event) => {
-      std_bar.max = input_std_max.value;
-    });
-
-    input_spec_max.addEventListener('change', (event) => {
-      spec_bar.max = input_spec_max.value;
-    });
-
-    //change select list -> reset bar val
-    std_select.addEventListener('change', (event) => {
-      //reset bar val
-      std_bar.value = 0;
-
-      std_title.innerHTML = std_select.value;
-    });
-
-    spec_select.addEventListener('change', (event) => {
-      //reset bar val
-      spec_bar.value = 0;
-
-      spec_title.innerHTML = spec_select.value;
-    });
-
-    //change bar val -> change character value
-    std_bar.addEventListener('change', (event) => {
-      val = std_bar.value;
-      id = std_select.value;
-      id = id.replace("Param", "");
-      id = id[0].toLowerCase() + id.slice(1);
-
-      view[id] = val;
-    });
-
-    spec_bar.addEventListener('change', (event) => {
-      val = spec_bar.value;
-      id = spec_select.value;
-      id = id.replace("Param", "");
-      id = id[0].toLowerCase() + id.slice(1);
-
-      view[id] = val;
-    });
-
-    function resetStd(){
-      //standard val
-      mystd_param.forEach(function(item){
-        id = item.replace("Param", "");
-        id = id[0].toLowerCase() + id.slice(1);
-
-        view[id] = old_view[id];
-      });
-
-      //reset bar val
-      std_bar.value = 0;
-      std_select.value = std_first_param;
-      std_title.innerHTML = std_first_param;
-
-      //
-      document.querySelector('#ParamAngleX').value = 0;
-      document.querySelector('#ParamAngleY').value = 0;
-      document.querySelector('#ParamAngleZ').value = 0;
-      document.querySelector('#ParamBrowLY').value = 0;
-      document.querySelector('#ParamBrowRY').value = 0;
-      document.querySelector('#ParamBrowLX').value = 0;
-      document.querySelector('#ParamBrowRX').value = 0;
-    }
-
-    function resetSpec(){
-      myspec_param.forEach(function(item){
-        id = item.replace("Param", "");
-        id = id[0].toLowerCase() + id.slice(1);
-
-        view[id] = old_view[id];
-      });
-
-      //reset bar val
-      spec_bar.value = 0;
-      spec_select.value = spec_first_param;
-      spec_title.innerHTML = spec_first_param;
-    }
-  </script>
 </body>
 </html>
