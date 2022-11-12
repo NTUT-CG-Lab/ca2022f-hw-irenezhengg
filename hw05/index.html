@@ -209,7 +209,7 @@
   <!-- ------------------------------------------------>
   <div class="row hw12">
     <div class="col-md-12 twenty">
-      <p> TODO
+      <p> HW05 primarily consists of MediaPipe + Cubism SDK for Web neural connection. We can obtain the facial point coordinates recognized by the system using the value of face landmarks, and then use these values to control the parameters of the Cubism character to achieve synchronization between the Cubism character and the face Effect.
 	  </p>
     </div>
   </div>
@@ -288,7 +288,6 @@
   d3.select("#myCheckbox4").on("change",update);
   d3.select("#myCheckbox5").on("change",update);
   d3.select("#myCheckbox6").on("change",update);
-  //d3.select("#myCheckbox7").on("change",update);
 
   update();
 
@@ -319,10 +318,6 @@
     if (d3.select("#myCheckbox6").property("checked")){
       score += parseInt(d3.select('#m6').html());
     }
-
-    // if (d3.select("#myCheckbox7").property("checked")){
-    //   score += parseInt(d3.select('#m7').html());
-    // }
 
     d3.select("#myTotal").html(score);
   }
